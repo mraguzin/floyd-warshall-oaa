@@ -11,28 +11,11 @@ import java.util.regex.Pattern;
  * @author mraguzin
  */
 public class FloydWarshall {
-
-    public static void najkraćiPut(float m[][]) {
-        // prema [1]
-        int n = m.length;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (m[j][i] < Float.POSITIVE_INFINITY) {
-                    for (int k = 0; k < n; ++k) {
-                        if (m[i][k] < Float.POSITIVE_INFINITY) {
-                            float s = m[j][i] + m[i][k];
-                            if (s < m[j][k])
-                                m[j][k] = s;
-                        }
-                    }
-                }
-            }
-        }
-    }
     
     public static void main(String[] args) {
         final String odgovori[] = {"matrica", "lista"};
         float[][] m;
+        Graf graf;
         
         Scanner s = new Scanner(new InputStreamReader(System.in));
         String odgovor = "";
@@ -67,6 +50,8 @@ public class FloydWarshall {
                     }
                 }
             }
+            
+            graf = new Graf(m);
         }
         
         else {
@@ -89,11 +74,10 @@ public class FloydWarshall {
                 lista.add(t);
             }
             
-            Graf graf = new Graf(lista);
-            m = graf.dajMatricuSusjednosti();
+            graf = new Graf(lista);
         }
         
-        najkraćiPut(m);
+        var putevi = graf.najkraćiPut();
     }
     
 }

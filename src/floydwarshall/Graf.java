@@ -63,4 +63,29 @@ public class Graf {
         
         return matricaSusjednosti;
     }
+    
+    // Floyd-Warshallov algoritam
+    public float[][] najkraćiPut() { // vraća matricu duljina najkraćih puteva između svih parova vrhova
+        // prema [1]
+        float[][] m = new float[n][];
+        for (int i = 0; i < n; ++i)
+            m[i] = matricaSusjednosti[i].clone();
+        
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (m[j][i] < Float.POSITIVE_INFINITY) {
+                    for (int k = 0; k < n; ++k) {
+                        if (m[i][k] < Float.POSITIVE_INFINITY) {
+                            float s = m[j][i] + m[i][k];
+                            if (s < m[j][k])
+                                m[j][k] = s;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return m;
+    }
+    
 }

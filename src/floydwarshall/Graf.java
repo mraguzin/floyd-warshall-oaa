@@ -79,21 +79,22 @@ public class Graf {
         for (int i = 0; i < n; ++i)
             m[i] = matricaSusjednosti[i].clone();
         
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (m[j][i] < Float.POSITIVE_INFINITY) {
-                    for (int k = 0; k < n; ++k) {
-                        if (m[i][k] < Float.POSITIVE_INFINITY) {
-                            float s = m[j][i] + m[i][k];
-                            if (s < m[j][k])
-                                m[j][k] = s;
+        for (int k = 0; k < n; ++k) {
+            for (int i = 0; i < n; ++i) {
+                if (m[i][k] < Float.POSITIVE_INFINITY) {
+                    for (int j = 0; j < n; ++j) {
+                        if (m[k][j] < Float.POSITIVE_INFINITY) {
+                            float s = m[i][k] + m[k][j];
+                            if (s < m[i][j])
+                                m[i][j] = s;
                         }
                     }
                 }
-                if (ispisKoraka) {
-                    System.out.println("i="+(i+1)+",j="+(j+1)+":");
-                    ispišiMatricu(m);
-                }
+            }
+            
+            if (ispisKoraka) {
+                System.out.println("k="+k+":");
+                ispišiMatricu(m);
             }
         }
         

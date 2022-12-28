@@ -44,7 +44,6 @@ public class FloydWarshall {
                 for (int j = 0; j < n; ++j) {
                     if (i != j) {
                         System.out.print("(" + (i+1) + "," + (j+1) + "): ");
-                        //while (!s.hasNextLine())
                         odgovor = s.nextLine();
                         if (odgovor.equals("inf"))
                             m[i][j] = Float.POSITIVE_INFINITY;

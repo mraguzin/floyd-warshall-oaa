@@ -40,16 +40,15 @@ public class Primjer2 {
     }
     
     public static void main(String args[]) {
-        final int[] veličine = {10, 50, 250, 500, 1000, 5000, 10000};
+        //final int[] veličine = {10, 50, 250, 500, 1000, 5000, 10000};
+        final int[] veličine = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 350, 400, 450, 500};
         final int n = 10; // broj ponavljanja izvršavanja algoritma za svaku veličinu
         Primjer2 p2 = new Primjer2();
         StopWatch sw = new StopWatch();
-        //var mjerenja = new HashMap<Integer,Double>();
         var mjerenja = new double[veličine.length];
         
         for (int k = 0; k < veličine.length; ++k) {
             int dim = veličine[k];
-            //sw.start();
             double t = 0;
             for (int i = 0; i < n; ++i) {
                 sw.start();
@@ -64,18 +63,23 @@ public class Primjer2 {
             }
             
             t /= n;
-            //mjerenja.put(dim, t);
             mjerenja[k] = t;
         }
         
         var dataset = new DefaultXYDataset();
-        var data = new double[veličine.length][2];
+        var data = new double[2][veličine.length];
+        var data2 = new double[2][veličine.length];
+        double C0 = mjerenja[10] / Math.pow(veličine[10], 3);
         for (int i = 0; i < mjerenja.length; ++i) {
-            data[i][0] = veličine[i];
-            data[i][1] = mjerenja[i];
+            data[0][i] = veličine[i];
+            data[1][i] = mjerenja[i];
+            data2[0][i] = veličine[i];
+            data2[1][i] = Math.pow(veličine[i], 3) * C0;
         }
             
-        dataset.addSeries("t", data);
+        dataset.addSeries("S(n)", data);
+        dataset.addSeries("Cn³", data2);
+        
         var chart = ChartFactory.createXYLineChart("Vremena izvođenja", "n", "t(ms)", dataset);
         try {
             ChartUtils.saveChartAsPNG(new File("vrijeme.png"), chart, 500, 500);

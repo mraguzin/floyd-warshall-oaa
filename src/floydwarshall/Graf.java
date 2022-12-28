@@ -1,6 +1,7 @@
 package floydwarshall;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,8 +40,8 @@ public class Graf {
             matricaSusjednosti[i][i]+", a mora biti jednak 0");
         }
         
-        this.matricaSusjednosti = matricaSusjednosti; //TODO napomeni u tekstu
-        //da ovdje svakako nema smisla dozvoliti petlje jer one ili samo produljuju
+        this.matricaSusjednosti = matricaSusjednosti; //
+        //ovdje svakako nema smisla dozvoliti petlje jer one ili samo produljuju
         //bilo koji put kroz dani vrh ili dovode do toga da je optimalno rješenje
         //beskonačno petljanje!
     }
@@ -65,13 +66,18 @@ public class Graf {
         return matricaSusjednosti;
     }
     
+    public static void ispišiMatricu(float[][] m) {
+        for (var red : m)
+            System.out.println(Arrays.toString(red));
+    }
+    
     // Floyd-Warshallov algoritam
-    public float[][] najkraćiPut() { // vraća matricu duljina najkraćih puteva između svih parova vrhova
-        // prema [1
+    public float[][] najkraćiPut(boolean ispisKoraka) { // vraća matricu duljina najkraćih puteva između svih parova vrhova
+        // prema [1]
         dajMatricuSusjednosti();
         float[][] m = new float[n][];
         for (int i = 0; i < n; ++i)
-            m[i] = matricaSusjednosti[i].clone(); //TODO: optimizacija preko inline kopiranja ispod?
+            m[i] = matricaSusjednosti[i].clone();
         
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
@@ -83,6 +89,10 @@ public class Graf {
                                 m[j][k] = s;
                         }
                     }
+                }
+                if (ispisKoraka) {
+                    System.out.println("i="+(i+1)+",j="+(j+1)+":");
+                    ispišiMatricu(m);
                 }
             }
         }

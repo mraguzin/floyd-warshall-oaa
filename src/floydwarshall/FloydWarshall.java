@@ -88,13 +88,8 @@ public class FloydWarshall {
             graf = new Graf(lista);
         }
         
-        var putevi = graf.najkraćiPut();
-        ispišiMatricu(putevi);
-    }
-    
-    public static void ispišiMatricu(float[][] m) {
-        for (var red : m)
-            System.out.println(Arrays.toString(red));
+        var putevi = graf.najkraćiPut(false);
+        Graf.ispišiMatricu(putevi);
     }
     
 }

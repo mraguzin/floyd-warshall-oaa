@@ -1,6 +1,7 @@
 package floydwarshall;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -8,12 +9,12 @@ import java.util.ArrayList;
  */
 public class Graf {
     private final int n; // broj vrhova
-    private ArrayList<Trojka<Integer,Integer,Float>> listaSusjednosti; // (i,j,težina)
+    private List<Trojka<Integer,Integer,Float>> listaSusjednosti; // (i,j,težina)
     private float[][] matricaSusjednosti; // konvencija je da težina ∞ označava
     //nepostojanje brida
     
     // konstrukcija preko liste susjednosti
-    public Graf(ArrayList<Trojka<Integer,Integer,Float>> listaSusjednosti) {
+    public Graf(List<Trojka<Integer,Integer,Float>> listaSusjednosti) {
         n = listaSusjednosti.size();
         // provjera validnosti ulaza
         for (var trojka : listaSusjednosti) {
@@ -69,7 +70,7 @@ public class Graf {
         // prema [1]
         float[][] m = new float[n][];
         for (int i = 0; i < n; ++i)
-            m[i] = matricaSusjednosti[i].clone();
+            m[i] = matricaSusjednosti[i].clone(); //TODO: optimizacija preko inline kopiranja ispod?
         
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {

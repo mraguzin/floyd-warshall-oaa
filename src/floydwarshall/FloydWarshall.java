@@ -2,6 +2,7 @@ package floydwarshall;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +18,7 @@ public class FloydWarshall {
         float[][] m;
         Graf graf;
         
-        Scanner s = new Scanner(new InputStreamReader(System.in));
+        Scanner s = new Scanner(System.in);
         String odgovor = "";
         boolean dalje = true;
         
@@ -34,20 +35,23 @@ public class FloydWarshall {
         
         if (odgovor.equals("matrica")) {
             System.out.print("Broj vrhova: ");
-            int n = s.nextInt();
+            int n = Integer.parseInt(s.nextLine());
             m = new float[n][n];
             System.out.println();
             System.out.println("Za težinu ∞ upišite inf");
+            
             for (int i = 0; i < n; ++i) {
                 for (int j = 0; j < n; ++j) {
                     if (i != j) {
                         System.out.print("(" + i + "," + j + "): ");
+                        //while (!s.hasNextLine())
                         odgovor = s.nextLine();
                         if (odgovor.equals("inf"))
                             m[i][j] = Float.POSITIVE_INFINITY;
                         else
                             m[i][j] = Float.parseFloat(odgovor);
                     }
+                    System.out.println();
                 }
             }
             
@@ -78,6 +82,12 @@ public class FloydWarshall {
         }
         
         var putevi = graf.najkraćiPut();
+        ispišiMatricu(putevi);
+    }
+    
+    public static void ispišiMatricu(float[][] m) {
+        for (var red : m)
+            System.out.println(Arrays.toString(red));
     }
     
 }

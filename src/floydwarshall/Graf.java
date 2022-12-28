@@ -67,7 +67,8 @@ public class Graf {
     
     // Floyd-Warshallov algoritam
     public float[][] najkraćiPut() { // vraća matricu duljina najkraćih puteva između svih parova vrhova
-        // prema [1]
+        // prema [1
+        dajMatricuSusjednosti();
         float[][] m = new float[n][];
         for (int i = 0; i < n; ++i)
             m[i] = matricaSusjednosti[i].clone(); //TODO: optimizacija preko inline kopiranja ispod?

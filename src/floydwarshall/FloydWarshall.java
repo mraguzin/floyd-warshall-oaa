@@ -25,7 +25,7 @@ public class FloydWarshall {
         while (dalje) {
             System.out.println("Kako želite unijeti graf? Mogući formati su: "
                 + "matrica susjedstva i lista susjedstva. Odgovorite sa 'matrica'"
-                + " ili 'lista'");
+                + " ili 'lista' (indeksi vrhova počinju s 1");
             odgovor = s.nextLine();
             for (var o : odgovori) {
                 if (odgovor.equals(o))
@@ -43,13 +43,17 @@ public class FloydWarshall {
             for (int i = 0; i < n; ++i) {
                 for (int j = 0; j < n; ++j) {
                     if (i != j) {
-                        System.out.print("(" + i + "," + j + "): ");
+                        System.out.print("(" + (i+1) + "," + (j+1) + "): ");
                         //while (!s.hasNextLine())
                         odgovor = s.nextLine();
                         if (odgovor.equals("inf"))
                             m[i][j] = Float.POSITIVE_INFINITY;
-                        else
+                        else try {
                             m[i][j] = Float.parseFloat(odgovor);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Krivi unos");
+                            j--;
+                        }
                     }
                     System.out.println();
                 }
@@ -59,21 +63,24 @@ public class FloydWarshall {
         }
         
         else {
-            System.out.println("Upisujte trojke u obliku (prvi vrh,drugi vrh,"
-                    + "težina). Za kraj, upišite 'kraj'");
+            System.out.println("Upisujte trojke u obliku prvi vrh,drugi vrh,"
+                    + "težina. Za kraj, upišite 'kraj'");
             var lista = new ArrayList<Trojka<Integer,Integer,Float>>();
             while (true) {
                 odgovor = s.nextLine();
                 if (odgovor.equals("kraj"))
                     break;
                 
-                Pattern p = Pattern.compile("\\((\\d+),(\\d+),(.)\\)");
-                Matcher matcher = p.matcher(odgovor);
-                matcher.find();
                 Trojka<Integer,Integer,Float> t = new Trojka<>();
-                t.prvi = Integer.parseInt(matcher.group(1));
-                t.drugi = Integer.parseInt(matcher.group(2));
-                t.treći = Float.parseFloat(matcher.group(3));
+                var dijelovi = odgovor.split(",");
+                try {
+                t.prvi = Integer.parseInt(dijelovi[0]) - 1;
+                t.drugi = Integer.parseInt(dijelovi[1]) - 1;
+                t.treći = Float.valueOf(dijelovi[2]);
+                } catch (NumberFormatException e) {
+                    System.out.println("Krivi unos");
+                    continue;
+                }
                 
                 lista.add(t);
             }
